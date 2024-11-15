@@ -1,9 +1,14 @@
 const express = require('express')
 require('dotenv').config()
+const cors = require('cors');
+
 const app = express()
+
 const mongoose = require('mongoose')
 // pour lire les console.logs dans les fcts 
 app.use(express.json())
+
+app.use(cors())
 const port = process.env.PORT;
 const urlDb = process.env.CONNECTION_STRING;
 mongoose.connect(urlDb, 
