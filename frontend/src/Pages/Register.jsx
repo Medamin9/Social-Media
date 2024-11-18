@@ -1,84 +1,75 @@
 import React, { useState } from "react";
 import UserService from "../Services/UserService";
-import toast, { Toaster }  from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
-  const [picture, setPicture] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [erros,setErros] = useState(
-    {
-      firstName : '',
-      lastName: '',
-      password: '',
-      email: '',
-      bio: '',
-      birthdate: '',
+  const [erros, setErros] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    email: "",
+    bio: "",
+    birthdate: "",
+  });
+  const formValidation = () => {
+    let status = true ;
+    let localErrors = {...erros};
+    if (firstName === "") {
+      localErrors.firstName = "Firstname Required";
+      status = false;
     }
-  );
-  const formValidation = ()=>{
-    let localErrors ={
-      firstName : '',
-      lastName: '',
-      password: '',
-      email: '',
-      bio: '',
-      birthdate: '',
-    };
-    if (firstName ==''){
-      localErrors.firstName = 'Firstname Required';
+    if (lastName === "") {
+      localErrors.lastName = "Lastname Required";
+      status = false;
     }
-    if (lastName ==''){
-      localErrors.lastName = 'Lastname Required';
+    if (password === "" || password.length < 8) {
+      localErrors.password = "Password Required and min 8 caracters";
+      status = false;
     }
-    if (password =='' || password.length < 8){
-      localErrors.password = 'Password Required and min 8 caracters';
-    }
-    if (bio ==''){
-      localErrors.bio = 'Bio Required';
+    if (email === "") {
+      localErrors.email = "Email Required";
+      status = false;
     }
 
     setErros(localErrors);
     console.log(erros);
-    return false
-  }
+    return status;
+  };
   const handleRegister = async (e) => {
     e.preventDefault();
     console.log("form submited");
 
-    if(formValidation()){
+    if (formValidation()) {
       const user = {
         firstName,
         lastName,
         password,
         email,
         bio,
-        picture,
         birthdate,
       };
       try {
         const resp = await UserService.register(user);
         console.log("response ==> ", resp);
         toast.success("User created Successfully!");
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setBio('');
-        setPassword('');
-        setBirthdate('');
-        setPicture('');
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setBio("");
+        setPassword("");
+        setBirthdate("");
       } catch (error) {
         console.log(error);
         toast.success("Failed Signup!");
       }
+    } else {
+      console.log("Form invalid");
     }
-    else{
-      console.log("Form invalid")
-    }
-    
   };
   return (
     <div className="register">
@@ -100,6 +91,14 @@ function Register() {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
+              {erros.firstName !== "" ? (
+                <div style={{ textAlign: "left", color: "orangered" }}>
+                  {" "}
+                  {erros.firstName}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="form-group">
@@ -110,6 +109,14 @@ function Register() {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
+              {erros.lastName !== "" ? (
+                <div style={{ textAlign: "left", color: "orangered" }}>
+                  {" "}
+                  {erros.lastName}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="form-group">
@@ -120,6 +127,14 @@ function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {erros.email !== "" ? (
+                <div style={{ textAlign: "left", color: "orangered" }}>
+                  {" "}
+                  {erros.email}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="form-group">
@@ -130,6 +145,14 @@ function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {erros.password !== "" ? (
+                <div style={{ textAlign: "left", color: "orangered" }}>
+                  {" "}
+                  {erros.password}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             <div className="form-group">
@@ -141,17 +164,6 @@ function Register() {
                 onChange={(e) => setBio(e.target.value)}
               ></textarea>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="">Picture</label>
-              <input
-                className="input"
-                type="file"
-                value={picture}
-                onChange={(e) => setPicture(e.target.value)}
-              />
-            </div>
-
             <div className="form-group">
               <label htmlFor="">Birthdate</label>
               <input
