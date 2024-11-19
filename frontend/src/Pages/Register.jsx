@@ -65,7 +65,7 @@ function Register() {
         setBirthdate("");
       } catch (error) {
         console.log(error);
-        toast.success("Failed Signup!");
+        toast.error("Failed Signup!");
       }
     } else {
       console.log("Form invalid");

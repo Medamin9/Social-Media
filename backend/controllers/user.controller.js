@@ -52,6 +52,7 @@ exports.signin = async (req,res)=>{
                         data:{
                         id:user.id ,
                         role:user.role,
+                        firstname : user.username
                     },
                     },
                     process.env.KEY,

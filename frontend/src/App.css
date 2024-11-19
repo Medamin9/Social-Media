@@ -8,7 +8,7 @@ html,body{
   margin: 0;
 }
 
-.register{
+.register, .login{
   width: 60vw;
   height: 84vh;
   margin: 8vh auto;
@@ -71,4 +71,17 @@ textarea {
   cursor: pointer;
   background-color: rgb(45, 40, 40);
   color: white;
+}
+
+.login-cover{
+  background-image: url("../public/login.jpg");
+  background-size: cover;
+  border-radius: 20px 0 0 20px;
+  box-shadow: 0 0 5px rgba(40, 39, 39, 0.6);
+  width: 50%;
+  height: 100%;
+}
+.login-content{
+  width: 50%;
+  text-align: center;
 }
